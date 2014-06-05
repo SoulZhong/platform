@@ -40,7 +40,7 @@ public class UdpService {
 			@Override
 			public void run() {
 
-				System.out.println("start udp service");
+				System.out.println("start udp service, msgHandler = " + msgHandler);
 				try {
 
 					EventLoopGroup group = new NioEventLoopGroup();
@@ -52,11 +52,12 @@ public class UdpService {
 
 						b.bind(serviceConfig.getPort()).sync().channel().closeFuture().await();
 					} catch (InterruptedException e) {
-						// e.printStackTrace();
+						e.printStackTrace();
 					} finally {
 						group.shutdownGracefully();
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 					logger.error("", e);
 				}
 			}
