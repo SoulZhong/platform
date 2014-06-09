@@ -55,6 +55,8 @@ public class MsgHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 
 			StringBuffer tmp = byteArrayToString(bytes);
 			logger.info(dataFrame + ", byte array:" + tmp);
+			
+			System.out.println(dataFrame + ", byte array:" + tmp);
 
 			DatagramPacket reply = new DatagramPacket(Unpooled.copiedBuffer(
 					"OK", Charset.forName("UTF-8")), msg.sender());

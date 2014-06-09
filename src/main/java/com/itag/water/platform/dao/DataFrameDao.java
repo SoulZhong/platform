@@ -19,8 +19,9 @@ public class DataFrameDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
-	public DataFrameDao(){}
+
+	public DataFrameDao() {
+	}
 
 	public DataFrameDao(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -30,30 +31,13 @@ public class DataFrameDao {
 
 		Session session = sessionFactory.getCurrentSession();
 
-		session.beginTransaction();
-		try {
-
-			session.save(dataFrame);
-
-			session.getTransaction().commit();
-
-		} finally {
-			session.close();
-		}
+		session.save(dataFrame);
 	}
 
 	public void delete(DataFrame dataFrame) {
 		Session session = sessionFactory.getCurrentSession();
+		session.delete(dataFrame);
 
-		session.beginTransaction();
-		try {
-			session.delete(dataFrame);
-
-			session.getTransaction().commit();
-
-		} finally {
-			session.close();
-		}
 	}
 
 }
