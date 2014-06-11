@@ -101,6 +101,7 @@ public class MsgHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 	 * @return
 	 */
 	private DataFrame parseData(DatagramPacket msg, byte[] bytes) {
+		
 		DataFrame dataFrame = new DataFrame();
 
 		InetSocketAddress sender = msg.sender();

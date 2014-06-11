@@ -21,7 +21,7 @@ public class MainController {
 
 	private StationInfos infos = StationInfos.instance;
 
-	@RequestMapping("/")
+	@RequestMapping("/status")
 	public String status(ModelMap map) {
 		map.put("stations", infos.getStations());
 

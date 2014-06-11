@@ -5,9 +5,9 @@
 			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</Console>
 		<File name="Access" fileName="/udpserver/logs/access.log" bufferedIO="false">
-			<Layout type="PatternLayout">
-			<Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
-			</Layout>
+<!-- 			<Layout type="PatternLayout"> -->
+<!-- 			<Pattern>%d %p %C{1.} [%t] %m%n</Pattern> -->
+<!-- 			</Layout> -->
 
 <!-- 			<PatternLayout pattern="%m%n" /> -->
 		</File>
