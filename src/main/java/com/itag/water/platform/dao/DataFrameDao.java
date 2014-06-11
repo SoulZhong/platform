@@ -5,6 +5,7 @@ package com.itag.water.platform.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,15 +30,20 @@ public class DataFrameDao {
 
 	public void save(DataFrame dataFrame) {
 
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 
+		Transaction transaction = session.beginTransaction();
 		session.save(dataFrame);
+		transaction.commit();
+		session.close();
 	}
 
 	public void delete(DataFrame dataFrame) {
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
 		session.delete(dataFrame);
-
+		transaction.commit();
+		session.close();
 	}
 
 }
