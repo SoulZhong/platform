@@ -2,14 +2,13 @@
 <Configuration status="WARN">
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<PatternLayout pattern="%d{ISO8601}-[%t]-%-5level-%logger{1} | %msg%n" />
 		</Console>
 		<File name="Access" fileName="/udpserver/logs/access.log" bufferedIO="false">
-<!-- 			<Layout type="PatternLayout"> -->
-<!-- 			<Pattern>%d %p %C{1.} [%t] %m%n</Pattern> -->
-<!-- 			</Layout> -->
-
-<!-- 			<PatternLayout pattern="%m%n" /> -->
+			<PatternLayout pattern="%d{ISO8601}-[%t]-%-5level-%logger{1} | %msg%n" />
+		</File>
+		<File name="Task" fileName="/udpserver/logs/task.log" bufferedIO="false">
+			<PatternLayout pattern="%d{ISO8601}-[%t]-%-5level-%logger{1} | %msg%n" />
 		</File>
 	</Appenders>
 	<Loggers>
@@ -18,6 +17,9 @@
 		</Root>
 		<logger name="com.itag.water.platform.service.MsgHandler" level="INFO">
 			<AppenderRef ref="Access" />
+		</logger>
+		<logger name="com.itag.water.platform.data.DataFramePool" level="INFO">
+			<AppenderRef ref="Task" />
 		</logger>
 	</Loggers>
 </Configuration>

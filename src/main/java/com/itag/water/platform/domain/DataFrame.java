@@ -31,10 +31,9 @@ public class DataFrame {
 	private String ip;
 	private int port;
 	private int stationId;
-
 	private int state;
-
 	private Date time;
+	private int count;//how many dataframes has be caculated
 
 	private double voltage;
 	private double electricity;
@@ -71,6 +70,14 @@ public class DataFrame {
 				+ voltage + ", electricity:" + electricity + ", waterGage:"
 				+ waterGage + ", waterLevel:" + waterLevel;
 
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	public String getIp() {

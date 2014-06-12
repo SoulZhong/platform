@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.itag.water.platform.dao.DataFrameDao;
 import com.itag.water.platform.dao.StationInfos;
+import com.itag.water.platform.data.DataFramePool;
 import com.itag.water.platform.domain.DataFrame;
 import com.itag.water.platform.exception.IllegalDataFrameException;
 
@@ -35,6 +36,9 @@ public class MsgHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 	@Autowired
 	private DataFrameDao dataFrameDao;
 
+	@Autowired
+	private DataFramePool dataFramePool;
+
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx, DatagramPacket msg) {
 
@@ -48,8 +52,10 @@ public class MsgHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 			validate(bytes);
 			DataFrame dataFrame = parseData(msg, bytes);
 
-			dataFrameDao.save(dataFrame);// save to database
-
+			// dataFrameDao.save(dataFrame);// save to database
+			dataFramePool.add(dataFrame);
+			
+			
 			stationInfos.updateInfo(dataFrame.getStationId(), dataFrame);// update
 			// stationInfo
 
@@ -101,12 +107,11 @@ public class MsgHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 	 * @return
 	 */
 	private DataFrame parseData(DatagramPacket msg, byte[] bytes) {
-		
+
 		DataFrame dataFrame = new DataFrame();
 
 		InetSocketAddress sender = msg.sender();
 
-		
 		dataFrame.setIp(sender.getAddress().getHostAddress());
 		dataFrame.setPort(sender.getPort());
 
