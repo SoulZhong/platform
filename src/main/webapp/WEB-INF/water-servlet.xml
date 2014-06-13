@@ -1,47 +1,58 @@
 <?xml  version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
         http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
->
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/websocket
+        http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd">
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.itag.water.platform" />
 
+
+	<websocket:handlers>
+		<websocket:mapping path="/info" handler="websocketMsgHandler" />
+	</websocket:handlers>
+
+	<bean id="websocketMsgHandler" class="com.itag.water.platform.websocket.WebSocketMsgHandler" />
+
 	<bean id="employeeDAO" class="com.howtodoinjava.dao.EmployeeDaoImpl"></bean>
 	<bean id="employeeManager" class="com.howtodoinjava.service.EmployeeManagerImpl"></bean>
-	<bean id="dataFrameDao" class="com.itag.water.platform.dao.DataFrameDao" scope="singleton"></bean>
-	<bean id="msgHandler" class="com.itag.water.platform.service.MsgHandler" scope="singleton"></bean>
-	<bean id="udpService" class="com.itag.water.platform.service.UdpService" scope="singleton" init-method="start"></bean>
-<!-- 
-	<bean name="exampleJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-		<property name="durability" value="true"></property>
-		<property name="jobClass" value="com.itag.water.platform.schedule.SaveJob" />
-		<property name="jobDataAsMap"> <map> <entry key="timeout" value="5" /> </map> </property>
-	</bean>
+	<bean id="dataFrameDao" class="com.itag.water.platform.dao.DataFrameDao"
+		scope="singleton"></bean>
+	<bean id="msgHandler" class="com.itag.water.platform.service.MsgHandler"
+		scope="singleton"></bean>
+	<bean id="udpService" class="com.itag.water.platform.service.UdpService"
+		scope="singleton" init-method="start"></bean>
+	<!-- <bean name="exampleJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"> 
+		<property name="durability" value="true"></property> <property name="jobClass" 
+		value="com.itag.water.platform.schedule.SaveJob" /> <property name="jobDataAsMap"> 
+		<map> <entry key="timeout" value="5" /> </map> </property> </bean> <bean 
+		id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+		<property name="jobDetail" ref="exampleJob"></property> <property name="cronExpression" 
+		value="0 * * * * ?"></property> </bean> -->
 
-	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-		<property name="jobDetail" ref="exampleJob"></property>
-		<property name="cronExpression" value="0 * * * * ?"></property>
-	</bean>
-	 -->
-	 
 	<bean id="dataFramePool" class="com.itag.water.platform.data.DataFramePool" />
 
-	<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	<bean id="jobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="dataFramePool"></property>
 		<property name="targetMethod" value="save"></property>
 		<property name="concurrent" value="false"></property>
 	</bean>
 
-	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+	<bean id="simpleTrigger"
+		class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
 		<property name="jobDetail" ref="jobDetail"></property>
 		<property name="startDelay" value="1000"></property>
 		<!-- run per 1min -->
@@ -51,10 +62,8 @@
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-			<!-- 
-				<ref bean="cronTrigger" />
-			 -->
-			 	<ref bean="simpleTrigger" />
+				<!-- <ref bean="cronTrigger" /> -->
+				<ref bean="simpleTrigger" />
 			</list>
 		</property>
 	</bean>
