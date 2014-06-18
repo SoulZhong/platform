@@ -12,8 +12,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.itag.water.platform.dao.DataFrameDao;
-import com.itag.water.platform.dao.StationInfos;
 import com.itag.water.platform.data.DataFramePool;
+import com.itag.water.platform.data.StationInfos;
 import com.itag.water.platform.domain.DataFrame;
 import com.itag.water.platform.exception.IllegalDataFrameException;
 

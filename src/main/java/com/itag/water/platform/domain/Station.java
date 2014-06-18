@@ -16,11 +16,6 @@ import com.itag.water.platform.service.UdpSender;
 public class Station {
 
 	private static final UdpSender udpSender = UdpSender.instance;
-
-	public static final int TriggerOn = 1;
-
-	public static final int TriggerOff = -1;
-
 	private long id;
 
 	private final int stationId;
