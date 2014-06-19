@@ -31,7 +31,7 @@
 	<bean id="msgHandler" class="com.itag.water.platform.service.MsgHandler" scope="singleton"></bean>
 	<bean id="stationInfos" class="com.itag.water.platform.data.StationInfos" scope="singleton"></bean>
 	<bean id="udpService" class="com.itag.water.platform.service.UdpService" scope="singleton" init-method="start"></bean>
-	<bean id="actions" class="com.itag.water.platform.data.Actions" scope="singleton" init-method="start"></bean>
+	<bean id="actions" class="com.itag.water.platform.data.Actions" scope="singleton"></bean>
 
 
 
@@ -41,6 +41,19 @@
 		<property name="jobDetail" ref="exampleJob"></property> <property name="cronExpression" value="0 * * * * ?"></property> </bean> -->
 
 	<bean id="dataFramePool" class="com.itag.water.platform.data.DataFramePool" />
+
+	<bean id="sendCommand" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="actions"></property>
+		<property name="targetMethod" value="run"></property>
+		<property name="concurrent" value="false"></property>
+	</bean>
+	<bean id="sendActionTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="sendCommand"></property>
+		<property name="startDelay" value="1000"></property>
+		<!-- run per 1min -->
+		<property name="repeatInterval" value="1000"></property>
+	</bean>
+
 
 	<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="dataFramePool"></property>
@@ -60,6 +73,8 @@
 			<list>
 				<!-- <ref bean="cronTrigger" /> -->
 				<ref bean="simpleTrigger" />
+				<!-- send action to the station -->
+				<ref bean="sendActionTrigger" />
 			</list>
 		</property>
 	</bean>

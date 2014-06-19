@@ -40,14 +40,15 @@ public class MainController {
 	public String action(@PathVariable("stationId") int stationId, @RequestParam("no") int no,
 			@RequestParam("type") int actionType) throws IllegalRequest {
 
-		Action action = new Action(stationId, no, actionType);
 		Station station = stationInfos.getStationInfo(stationId);
+		Action action = new Action(station, no, actionType);
 
-		actions.put(stationId, action);
+		actions.add(action);
 
-		System.out.println(stationId + "::stationId::" + station.getStationId());
-		System.out.println("no:" + no);
-		System.out.println("type" + actionType);
+		// System.out.println(stationId + "::stationId::" +
+		// station.getStationId());
+		// System.out.println("no:" + no);
+		// System.out.println("type" + actionType);
 
 		// if (actionType == Station.TriggerOn) {
 		// station.on(no);

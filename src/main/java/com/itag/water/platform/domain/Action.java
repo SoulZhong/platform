@@ -11,16 +11,18 @@ import com.itag.water.platform.exception.IllegalRequest;
  */
 public class Action {
 
-	private int stationId;
+	private Station station;
 	private int buttonNumber;
 
 	private boolean turnOn;
+	private int doCounter;
 
 	public static final int ACTIONTYPE_ON = 1;
 	public static final int ACTIONTYPE_OFF = -1;
+	private static final int DONE_MAX = 3;
 
-	public Action(int stationId, int buttonNumber, int actionType) throws IllegalRequest {
-		this.stationId = stationId;
+	public Action(Station station, int buttonNumber, int actionType) throws IllegalRequest {
+		this.station = station;
 		this.buttonNumber = buttonNumber;
 
 		if (actionType == ACTIONTYPE_ON) {
@@ -33,12 +35,12 @@ public class Action {
 
 	}
 
-	public int getStationId() {
-		return stationId;
+	public Station getStation() {
+		return station;
 	}
 
-	public void setStationId(int stationId) {
-		this.stationId = stationId;
+	public void setStation(Station station) {
+		this.station = station;
 	}
 
 	public int getButtonNumber() {
@@ -55,6 +57,23 @@ public class Action {
 
 	public void setTurnOn(boolean turnOn) {
 		this.turnOn = turnOn;
+	}
+
+	public void doAction() {
+
+		if (isTurnOn()) {
+			station.on(buttonNumber);
+		} else {
+			station.off(buttonNumber);
+		}
+
+		doCounter++;
+
+	}
+
+	public boolean doneMax() {
+
+		return doCounter > DONE_MAX;
 	}
 
 }

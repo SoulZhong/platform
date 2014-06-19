@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.itag.water.platform.dao.DataFrameDao;
+import com.itag.water.platform.data.Actions;
 import com.itag.water.platform.data.DataFramePool;
 import com.itag.water.platform.data.StationInfos;
 import com.itag.water.platform.domain.DataFrame;
@@ -31,7 +32,11 @@ public class MsgHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 
 	private Logger logger = LogManager.getLogger(MsgHandler.class);
 
-	private StationInfos stationInfos = StationInfos.instance;
+	@Autowired
+	private Actions actions;
+
+	@Autowired
+	private StationInfos stationInfos;
 
 	@Autowired
 	private DataFrameDao dataFrameDao;
@@ -49,24 +54,29 @@ public class MsgHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 		bb.getBytes(readerIndex, bytes);
 
 		try {
-			validate(bytes);
-			DataFrame dataFrame = parseData(msg, bytes);
 
-			// dataFrameDao.save(dataFrame);// save to database
-			dataFramePool.add(dataFrame);
-			
-			
-			stationInfos.updateInfo(dataFrame.getStationId(), dataFrame);// update
-			// stationInfo
+			if (isActionReply(bytes)) {
+				actions.hasReplied(msg.sender().getAddress().getHostAddress());
+			} else {
 
-			StringBuffer tmp = byteArrayToString(bytes);
-			logger.info(dataFrame + ", byte array:" + tmp);
+				validate(bytes);
+				DataFrame dataFrame = parseData(msg, bytes);
 
-			System.out.println(dataFrame + ", byte array:" + tmp);
+				// dataFrameDao.save(dataFrame);// save to database
+				dataFramePool.add(dataFrame);
 
-			DatagramPacket reply = new DatagramPacket(Unpooled.copiedBuffer("OK", Charset.forName("UTF-8")),
-					msg.sender());
-			ctx.write(reply);// reply
+				stationInfos.updateInfo(dataFrame.getStationId(), dataFrame);// update
+				// stationInfo
+
+				StringBuffer tmp = byteArrayToString(bytes);
+				logger.info(dataFrame + ", byte array:" + tmp);
+
+				System.out.println(dataFrame + ", byte array:" + tmp);
+
+				DatagramPacket reply = new DatagramPacket(Unpooled.copiedBuffer("OK", Charset.forName("UTF-8")),
+						msg.sender());
+				ctx.write(reply);// reply
+			}
 		} catch (IllegalDataFrameException e) {
 
 			StringBuffer tmp = byteArrayToString(bytes);
@@ -78,6 +88,16 @@ public class MsgHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 			// CTX.WRITE(REPLY);
 		}
 
+	}
+
+	/**
+	 * 是否是回复信息
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	private boolean isActionReply(byte[] bytes) {
+		return "!".equals(new String(bytes));
 	}
 
 	private StringBuffer byteArrayToString(byte[] bytes) {
