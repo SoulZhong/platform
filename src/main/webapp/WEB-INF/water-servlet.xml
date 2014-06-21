@@ -16,15 +16,15 @@
 >
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.itag.water.platform" />
+	<context:component-scan base-package="com.itag.water.platform.controller" />
 
-
+<!-- 
 	<websocket:handlers>
 		<websocket:mapping path="/info" handler="websocketMsgHandler" />
 	</websocket:handlers>
 
 	<bean id="websocketMsgHandler" class="com.itag.water.platform.websocket.WebSocketMsgHandler" />
-
+ -->
 	<bean id="employeeDAO" class="com.howtodoinjava.dao.EmployeeDaoImpl"></bean>
 	<bean id="employeeManager" class="com.howtodoinjava.service.EmployeeManagerImpl"></bean>
 	<bean id="dataFrameDao" class="com.itag.water.platform.dao.DataFrameDao" scope="singleton"></bean>

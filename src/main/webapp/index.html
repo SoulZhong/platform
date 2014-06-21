@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<title>供水管理系统</title>
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style>
+body {
+	width: 100%;
+}
+
+div.wrapper {
+	width: 100%;
+	text-align: center;
+}
+
+.stationInfo {
+	border: 2px solid black;
+	display: inline-block;
+}
+</style>
+<script type="text/javascript" src="js/angular.js"></script>
+<script type="text/javascript" src="js/controller.js"></script>
+</head>
+<body ng-controller="StationCtrl">
+	<div class="wrapper">
+		<h1>供水控制系统</h1>
+		<div class="stationInfo" ng-repeat="station in stations">
+			<table>
+				<tr>
+					<td>站点号</td>
+					<td>{{station.stationId}}</td>
+				</tr>
+				<tr>
+					<td>网络地址</td>
+					<td>{{station.ip}}:{{station.port}}</td>
+				</tr>
+				<tr>
+					<td>电压</td>
+					<td>{{station.lastDataFrame.voltage}}</td>
+				</tr>
+				<tr>
+					<td>电流</td>
+					<td>{{station.lastDataFrame.electricity}}</td>
+				</tr>
+				<tr>
+					<td>水压</td>
+					<td>{{station.lastDataFrame.waterGage}}</td>
+				</tr>
+				<tr>
+					<td>水位</td>
+					<td>{{station.lastDataFrame.waterLevel}}</td>
+				</tr>
+				<tr>
+					<td>更新时间</td>
+					<td>{{station.lastDataFrame.time}}</td>
+				</tr>
+				<tr>
+					<td>主泵</td>
+					<td>{{station.master}}<input type="button" value="开启" onclick="command(${station.key}, 1, 1);" /> <input
+						type="button" value="关闭" onclick="command(${station.key}, 1, -1);"
+					/></td>
+				</tr>
+				<tr>
+					<td>辅泵</td>
+					<td>{{station.secondary}}<input type="button" value="开启" onclick="command(${station.key}, 2, 1);" /> <input
+						type="button" value="关闭" onclick="command(${station.key}, 2, -1);"
+					/></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

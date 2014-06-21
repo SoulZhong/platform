@@ -16,6 +16,13 @@ import com.itag.water.platform.domain.Station;
  * @email soullleo@hotmail.com
  */
 public class StationInfos {
+	public StationInfos() {
+		DataFrame test = new DataFrame();
+
+		for (int i = 0; i < 5; i++) {
+			updateInfo(i, test);
+		}
+	}
 
 	private List<StationListener> listeners = new ArrayList<StationListener>();
 
@@ -34,7 +41,7 @@ public class StationInfos {
 	}
 
 	private void onUpdateInfo(Station station) {
-		for (int i = stations.size() - 1; i >= 0; i--) {
+		for (int i = listeners.size() - 1; i >= 0; i--) {
 			listeners.get(i).onUpdateInfo();
 		}
 

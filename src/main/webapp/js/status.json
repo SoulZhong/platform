@@ -1,0 +1,35 @@
+[{
+	"stationId":1,
+	"ip":"127.0.0.1",
+	"port":2020,
+	"lastDataFrame":{
+		"voltage":1111,
+		"waterLevel":2,
+		"waterGage":555,
+		"electricity":3333,
+		"time":"2014-04-01 12:12:12"		
+	}
+},{
+	"stationId":2,
+	"ip":"127.0.0.1",
+	"port":2020,
+	"lastDataFrame":{
+		"voltage":1111,
+		"waterLevel":2,
+		"waterGage":555,
+		"electricity":3333,
+		"time":"2014-04-01 12:12:12"		
+	}
+},{
+	"stationId":3,
+	"ip":"127.0.0.1",
+	"port":2020,
+	"lastDataFrame":{
+		"voltage":1111,
+		"waterLevel":2,
+		"waterGage":555,
+		"electricity":3333,
+		"time":"2014-04-01 12:12:12"		
+	}
+}
+]

@@ -21,8 +21,9 @@ public class Station {
 	private final int stationId;
 	private volatile String name;
 	private volatile String description;
-
 	private volatile boolean enable;
+	private volatile boolean masterOn;
+	private volatile boolean secondaryOn;
 
 	private volatile DataFrame lastDataFrame;
 
@@ -30,6 +31,22 @@ public class Station {
 		this.stationId = stationId;
 
 		this.enable = true;
+	}
+
+	public boolean isMasterOn() {
+		return masterOn;
+	}
+
+	public void setMasterOn(boolean masterOn) {
+		this.masterOn = masterOn;
+	}
+
+	public boolean isSecondaryOn() {
+		return secondaryOn;
+	}
+
+	public void setSecondaryOn(boolean secondaryOn) {
+		this.secondaryOn = secondaryOn;
 	}
 
 	public long getId() {

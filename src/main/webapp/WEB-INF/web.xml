@@ -5,7 +5,7 @@
 	id="WebApp_ID" version="2.5">
 	<display-name>water</display-name>
 	<welcome-file-list>
-		<welcome-file>/index.jsp</welcome-file>
+		<welcome-file>/index.html</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
@@ -15,8 +15,9 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>water</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/*.w</url-pattern>
 	</servlet-mapping>
+
 	<!-- 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
