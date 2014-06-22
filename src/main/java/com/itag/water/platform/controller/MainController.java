@@ -5,8 +5,6 @@ package com.itag.water.platform.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -29,15 +27,15 @@ public class MainController {
 	@Autowired
 	private Actions actions;
 
-	@RequestMapping("/status")
-	public String status(ModelMap map) {
-		map.put("stations", stationInfos.getStations());
+	// @RequestMapping("/status")
+	// public String status(ModelMap map) {
+	// map.put("stations", stationInfos.getStations());
+	//
+	// return "status";
+	// }
 
-		return "status";
-	}
-
-	@RequestMapping("/action/{stationId}")
-	public String action(@PathVariable("stationId") int stationId, @RequestParam("no") int no,
+	@RequestMapping("/action.w")
+	public String action(@RequestParam("stationId") int stationId, @RequestParam("no") int no,
 			@RequestParam("type") int actionType) throws IllegalRequest {
 
 		Station station = stationInfos.getStationInfo(stationId);

@@ -17,9 +17,28 @@ div.wrapper {
 	border: 2px solid black;
 	display: inline-block;
 }
+
+.green {
+	background-color: green;
+}
+
+.red {
+	background-color: red;
+}
 </style>
 <script type="text/javascript" src="js/angular.js"></script>
 <script type="text/javascript" src="js/controller.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+	function command(stationId, number, type){
+		console.log(stationId +',' number+',' + type);
+		
+		$.get("/action/"+stationId +"?no="+ number +"&type="+type, function(result){
+		    console.log(result);
+		  });
+
+	}
+</script>
 </head>
 <body ng-controller="StationCtrl">
 	<div class="wrapper">
@@ -55,15 +74,15 @@ div.wrapper {
 					<td>{{station.lastDataFrame.time}}</td>
 				</tr>
 				<tr>
-					<td>主泵</td>
-					<td>{{station.master}}<input type="button" value="开启" onclick="command(${station.key}, 1, 1);" /> <input
-						type="button" value="关闭" onclick="command(${station.key}, 1, -1);"
+					<td ng-class="{true:'green', false:'red'}[station.master]">主泵</td>
+					<td><input type="button" value="开启" ng-click="command(station.stationId, 1, 1)" /> <input type="button"
+						value="关闭" ng-click="command(station.stationId, 1, -1)"
 					/></td>
 				</tr>
 				<tr>
-					<td>辅泵</td>
-					<td>{{station.secondary}}<input type="button" value="开启" onclick="command(${station.key}, 2, 1);" /> <input
-						type="button" value="关闭" onclick="command(${station.key}, 2, -1);"
+					<td ng-class="{true:'green', false:'red'}[station.secondary]">辅泵</td>
+					<td><input type="button" value="开启" ng-click="command(station.stationId, 2, 1)" /> <input type="button"
+						value="关闭" ng-click="command(station.stationId, 2, -1)"
 					/></td>
 				</tr>
 			</table>
