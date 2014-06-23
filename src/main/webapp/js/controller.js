@@ -3,9 +3,7 @@ function StationCtrl($scope, $http) {
 		$scope.stations = data;
 	});
 	
-	$scope.command=function(stationId, num, type){
-		console.log(stationId +',' + num + ',' + type);
-		
+	$scope.command=function(stationId, num, type){	
 		$.get("action.w?stationId="+stationId +"&no="+ num +"&type="+type, function(result){
 		    console.log(result);
 		  });

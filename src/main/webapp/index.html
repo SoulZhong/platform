@@ -75,15 +75,14 @@ div.wrapper {
 				</tr>
 				<tr>
 					<td ng-class="{true:'green', false:'red'}[station.master]">主泵</td>
-					<td><input type="button" value="开启" ng-click="command(station.stationId, 1, 1)" /> <input type="button"
-						value="关闭" ng-click="command(station.stationId, 1, -1)"
-					/></td>
+					<td><input type="button" value="开启" ng-click="command(station.stationId, 1, 1)" ng-disabled="station.master" />
+						<input type="button" value="关闭" ng-click="command(station.stationId, 1, -1)" ng-disabled="!station.master" /></td>
 				</tr>
 				<tr>
 					<td ng-class="{true:'green', false:'red'}[station.secondary]">辅泵</td>
-					<td><input type="button" value="开启" ng-click="command(station.stationId, 2, 1)" /> <input type="button"
-						value="关闭" ng-click="command(station.stationId, 2, -1)"
-					/></td>
+					<td><input type="button" value="开启" ng-click="command(station.stationId, 2, 1)"
+						ng-disabled="station.secondary"
+					/> <input type="button" value="关闭" ng-click="command(station.stationId, 2, -1)" ng-disabled="!station.secondary" /></td>
 				</tr>
 			</table>
 		</div>
