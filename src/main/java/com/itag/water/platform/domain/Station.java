@@ -110,7 +110,8 @@ public class Station {
 
 			System.out.println("datagrampacket:" + msg);
 			if (msg != null) {
-				udpSender.send(msg);
+				this.lastDataFrame.getCtx().writeAndFlush(msg);
+				//udpSender.send(msg);
 			} else {
 				// TODO
 			}
@@ -134,7 +135,9 @@ public class Station {
 			}
 
 			if (msg != null) {
-				udpSender.send(msg);
+				
+				this.lastDataFrame.getCtx().writeAndFlush(msg);
+//				udpSender.send(msg);
 			} else {
 				// TODO
 

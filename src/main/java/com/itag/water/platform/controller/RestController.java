@@ -23,7 +23,8 @@ public class RestController {
 
 	@RequestMapping("status.w")
 	public String status(ModelMap map) {
-
+		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> status.w <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< ");
 		map.put("stations", stationInfos.getStations());
 		return "api/status";
 	}

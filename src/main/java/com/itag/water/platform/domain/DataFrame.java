@@ -3,6 +3,8 @@
  */
 package com.itag.water.platform.domain;
 
+import io.netty.channel.ChannelHandlerContext;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -33,12 +35,14 @@ public class DataFrame {
 	private int stationId;
 	private int state;
 	private Date time;
-	private int count;//how many dataframes has be caculated
+	private int count;// how many dataframes has be caculated
 
 	private double voltage;
 	private double electricity;
 	private double waterGage;
 	private double waterLevel;
+
+	private transient ChannelHandlerContext ctx;
 
 	public long getId() {
 		return id;
@@ -66,9 +70,8 @@ public class DataFrame {
 
 	@Override
 	public String toString() {
-		return "sender:" + ip + ":" + port + ", time:" + time + ", voltage:"
-				+ voltage + ", electricity:" + electricity + ", waterGage:"
-				+ waterGage + ", waterLevel:" + waterLevel;
+		return "sender:" + ip + ":" + port + ", time:" + time + ", voltage:" + voltage + ", electricity:" + electricity
+				+ ", waterGage:" + waterGage + ", waterLevel:" + waterLevel;
 
 	}
 
@@ -97,7 +100,7 @@ public class DataFrame {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-//	@Column(name = "TIME")
+	// @Column(name = "TIME")
 	public Date getTime() {
 		return time;
 	}
@@ -136,6 +139,14 @@ public class DataFrame {
 
 	public void setWaterLevel(double waterLevel) {
 		this.waterLevel = waterLevel;
+	}
+
+	public ChannelHandlerContext getCtx() {
+		return ctx;
+	}
+
+	public void setCtx(ChannelHandlerContext ctx) {
+		this.ctx = ctx;
 	}
 
 }
