@@ -21,7 +21,7 @@
 	
 	<mvc:annotation-driven></mvc:annotation-driven>
 	
-	<mvc:resources location="/index.html" mapping="/index.html"  />
+	<mvc:resources location="/index.html" mapping="/*.html"  />
 	<mvc:resources location="/js/" mapping="/js/*.js"/>
 
 <!-- 

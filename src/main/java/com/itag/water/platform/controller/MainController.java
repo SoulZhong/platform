@@ -3,6 +3,10 @@
  */
 package com.itag.water.platform.controller;
 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +37,11 @@ public class MainController {
 	//
 	// return "status";
 	// }
+	
+	@RequestMapping("/")
+	public String root(HttpServletRequest request, HttpServletResponse response){
+		return "redirect:/index.html";
+	}
 
 	@RequestMapping("/action.w")
 	public String action(@RequestParam("stationId") int stationId, @RequestParam("no") int no,
