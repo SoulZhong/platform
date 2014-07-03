@@ -21,6 +21,14 @@ public class Action {
 	public static final int ACTIONTYPE_OFF = -1;
 	private static final int DONE_MAX = 3;
 
+	@Override
+	public String toString() {
+
+		return "Station: " + station.getStationId() + ", StationAddress: " + station.getLastDataFrame().getIp() + ":"
+				+ station.getLastDataFrame().getPort() + ", buttonNumber: " + buttonNumber + ", turnOn: " + turnOn
+				+ ", executeCount: " + doCounter;
+	}
+
 	public Action(Station station, int buttonNumber, int actionType) throws IllegalRequest {
 		this.station = station;
 		this.buttonNumber = buttonNumber;

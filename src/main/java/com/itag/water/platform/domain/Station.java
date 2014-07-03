@@ -3,8 +3,10 @@
  */
 package com.itag.water.platform.domain;
 
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import com.itag.water.platform.service.Command;
 import com.itag.water.platform.service.UdpSender;
@@ -95,7 +97,6 @@ public class Station {
 
 	public void on(int number) {
 
-		System.out.println("nummmmm:" + number);
 		try {
 			DatagramPacket msg = null;
 			if (number == Command.MainON.getNumber()) {
@@ -110,19 +111,31 @@ public class Station {
 
 			System.out.println("datagrampacket:" + msg);
 			if (msg != null) {
-				this.lastDataFrame.getCtx().writeAndFlush(msg);
-				//udpSender.send(msg);
+//				try{
+//					
+//					System.out.println("send msg: " + msg);
+//					this.lastDataFrame.getCtx().writeAndFlush(msg);
+//				}catch(Exception ex){
+//					
+//					ex.printStackTrace();
+//				}
+				 try {
+					udpSender.send(msg);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
 				// TODO
 			}
-		} catch (Exception ex) {
+		} catch (UnknownHostException ex) {
 			ex.printStackTrace();
 		}
 	}
 
 	public void off(int number) {
-		try {
 
+		try {
 			DatagramPacket msg = null;
 			if (number == Command.MainOff.getNumber()) {
 				byte[] v = Command.MainOff.getCommand().getBytes();
@@ -135,16 +148,23 @@ public class Station {
 			}
 
 			if (msg != null) {
-				
-				this.lastDataFrame.getCtx().writeAndFlush(msg);
-//				udpSender.send(msg);
+
+//				this.lastDataFrame.getCtx().writeAndFlush(msg);
+				 try {
+					udpSender.send(msg);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
 				// TODO
 
 			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+
 	}
 
 }

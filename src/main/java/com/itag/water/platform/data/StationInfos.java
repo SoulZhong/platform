@@ -17,11 +17,11 @@ import com.itag.water.platform.domain.Station;
  */
 public class StationInfos {
 	public StationInfos() {
-		DataFrame test = new DataFrame();
-
-		for (int i = 0; i < 5; i++) {
-			updateInfo(i, test);
-		}
+//		DataFrame test = new DataFrame();
+//
+//		for (int i = 0; i < 5; i++) {
+//			updateInfo(i, test);
+//		}
 	}
 
 	private List<StationListener> listeners = new ArrayList<StationListener>();
